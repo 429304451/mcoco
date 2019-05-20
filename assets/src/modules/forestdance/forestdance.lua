@@ -3,7 +3,7 @@ local forestdance = class("forestdance", function (scene)
     return cc.Layer:create()
 end)
 
--- local ExternalFun =  appdf.req(appdf.EXTERNAL_SRC .. "ExternalFun")
+local ExternalFun =  appdf.req(appdf.EXTERNAL_SRC .. "ExternalFun")
 -- local g_var = ExternalFun.req_var
 local cmd = require("modules.forestdance.cmd_game")
 
@@ -225,6 +225,34 @@ function forestdance:init3DModel()
     end
 end
 
+function forestdance:getAnimRes(animIndex)
+    local res = "3d_res/model_lion/lion.c3b"
+
+    if animIndex == 1 then
+        res = "3d_res/model_panda/panda.c3b"
+    elseif animIndex == 2 then
+        res = "3d_res/model_monkey/monkey.c3b"
+    elseif animIndex == 3 then
+        res = "3d_res/model_rabbit/rabbit.c3b"
+    end
+
+    return res
+end
+
+function forestdance:getAnimIMG(animIndex)
+    local res = "3d_res/model_lion/tex.jpg"
+
+    if animIndex == 1 then
+        res = "3d_res/model_panda/tex.jpg"
+    elseif animIndex == 2 then
+        res = "3d_res/model_monkey/tex.jpg"
+    elseif animIndex == 3 then
+        res = "3d_res/model_rabbit/tex.jpg"
+    end
+
+    return res
+end
+
 function forestdance:initAnimal()
     self._animLayer = cc.Sprite3D:create()
     self._animLayer:setPosition3D(cc.vec3(0, 0, 0))
@@ -313,7 +341,7 @@ function forestdance:initAnimal()
             local delay = cc.DelayTime:create(fTime)
             local action = cc.Animate3D:create(animtion, 0, self._animalTimeFree[animIndex + 1])
             local rep = cc.RepeatForever:create(action)
-            rep:setTag(GameViewLayer.AnimalTag.Tag_Animal)
+            rep:setTag(self.AnimalTag.Tag_Animal)
             animal:runAction(rep)
         end )))
     end
@@ -351,17 +379,54 @@ function forestdance:initAnimal()
     self._arrow:setCameraMask(cc.CameraFlag.USER1)
     self.m_3dLayer:addChild(self._arrow)
 end
-
+-- @ws 顶部动画
+function forestdance:topAnimation(bool,num)
+    self.showNum = self.showNum + 1
+    self.showType = self.showType + 1
+    if self.showType > 2 then
+        self.showType = 0
+    end
+    if self.showNum > 6 then
+        bool = false
+    end
+    local file = string.format("game_res/game_sence/icon_top_"..self.showType..".png")
+    local node_top = self._rootNode:getChildByName("icon_top_frame")
+    local mark = node_top:getChildByName("mark")
+    local sp_top = mark:getChildByName("icon_top_he")
+    if bool then
+        sp_top:runAction(cc.Sequence:create(
+        cc.MoveTo:create(0.7,cc.p(37,58)),
+        cc.CallFunc:create(function()
+            sp_top:setPosition(37,-18)
+            self:topAnimation(true,num)
+            sp_top:setTexture(file)         
+        end)
+        ))
+        
+    else
+        if not num then
+            num = 2
+        end
+        sp_top:runAction(cc.Sequence:create(cc.CallFunc:create(function() 
+            sp_top:setTexture("game_res/game_sence/icon_top_"..num..".png")
+            self.showType = -1
+            self.showNum = 0
+            self.showRotateEffect(5)
+        end),cc.MoveTo:create(1,cc.p(37,21))))
+      
+    end
+   
+end
 function forestdance:initPlaceJettonLayer()
     print("initPlaceJettonLayer")
-    self._posStyle = g_var(cmd).NormalPos
+    self._posStyle = cmd.NormalPos
     self._PlaceJettonLayer = ccui.ImageView:create()
-    self._PlaceJettonLayer:setContentSize(cc.size(yl.WIDTH, yl.HEIGHT))
+    self._PlaceJettonLayer:setContentSize(cc.size(display.width, display.height))
     self._PlaceJettonLayer:setScale9Enabled(true)
     self._PlaceJettonLayer:setAnchorPoint(cc.p(0.5, 0.5))
-    self._PlaceJettonLayer:setPosition(yl.WIDTH / 2, - yl.HEIGHT)
+    self._PlaceJettonLayer:setPosition(display.width / 2, - display.height)
     self._PlaceJettonLayer:setTouchEnabled(true)
-    self:addChild(self._PlaceJettonLayer, GameViewLayer.TopZorder)
+    self:addChild(self._PlaceJettonLayer, self.TopZorder)
 
     self._PlaceJettonLayer:addTouchEventListener( function(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
@@ -371,7 +436,7 @@ function forestdance:initPlaceJettonLayer()
 
     -- 加载CSB
     local csbnode = cc.CSLoader:createNode("game_res/PlaceJetton.csb");
-    csbnode:setPosition(yl.WIDTH / 2, yl.HEIGHT / 2)
+    csbnode:setPosition(display.width / 2, display.height / 2)
     self._PlaceJettonLayer:addChild(csbnode)
     self._PlaceJettonLayer.rootNode = csbnode
 
@@ -383,10 +448,10 @@ function forestdance:initPlaceJettonLayer()
     icon_yazhu:addTouchEventListener( function(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             if bIsShowjettonBg == true then
-                self:popPlaceJettonLayer(g_var(cmd).NormalPos)
+                self:popPlaceJettonLayer(cmd.NormalPos)
                 bIsShowjettonBg = false
             else
-                self:popPlaceJettonLayer(g_var(cmd).bottomHidden)
+                self:popPlaceJettonLayer(cmd.bottomHidden)
                 bIsShowjettonBg = true
             end
             
@@ -463,7 +528,7 @@ function forestdance:initPlaceJettonLayer()
                     self._scene._gameModel._sceneData.lBetTotalCount[1][i] = lastTotal
                     
                     local dataBuffer = CCmd_Data:create(0)
-                    self._scene:SendData(g_var(cmd).SUB_C_CANCEL_BET, dataBuffer)
+                    self._scene:SendData(cmd.SUB_C_CANCEL_BET, dataBuffer)
                    
                 end
             end
@@ -528,19 +593,19 @@ function forestdance:load2DModelCallBack(texture)
         readAnimation("sy", "SYAnim", 15, 0.07)
 
         -- self._scene:removeChildByTag(23) -- ## 等待处理
-        print("load2DModelCallBack222")
+
         self:init3DModel()
-        print("load2DModelCallBack333")
         self:initAnimal()
         self:initCsbRes()
+        print("load2DModelCallBack333")
 
-        -- self._resLoadFinish = true
-        -- self._scene._bCaijinStatus = true
+        self._resLoadFinish = true
+        self._bCaijinStatus = true
 
-        -- if self._scene._gameModel._bScene then
+        if self._gameModel._bScene then
         --     self._animLayer:setRotation3D(cc.vec3(0, 360 - self._scene._gameModel._sceneData.nAnimalRotateAngle * 15, 0))
         --     self._arrow:setRotation3D(cc.vec3(0, self._scene._gameModel._sceneData.nPointerRatateAngle * 15 + 185, 0))
-        -- end
+        end
 
         -- if self._scene._gameStatus <= g_var(cmd).IDI_GAME_BET then
         --     -- 空闲或下注状态
@@ -561,6 +626,7 @@ function forestdance:load2DModelCallBack(texture)
         --         self:updateControl()
         --     end
         -- end
+        print("load2DModelCallBack444")
     end
 end
 -- 加载层
