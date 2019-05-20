@@ -3,7 +3,11 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Image Name="HelloWorld.png" />
+        <Folder Name="csb" />
+        <Folder Name="img2">
+          <Image Name="2.png" />
+          <Image Name="HelloWorld.png" />
+        </Folder>
         <Project Name="MainScene.csd" Type="Scene" />
       </RootFolder>
     </Group>

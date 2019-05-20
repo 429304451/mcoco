@@ -1,27 +1,24 @@
-
+-- 图片加载失败时 是否弹出消息框
 cc.FileUtils:getInstance():setPopupNotify(false)
-cc.FileUtils:getInstance():addSearchPath("src/")
-cc.FileUtils:getInstance():addSearchPath("res/")
-
 -- 平台 0-window,1-linux,2-mac,3-android, 4-iphone,5-ipad
 __Platform__ = cc.Application:getInstance():getTargetPlatform()
 trace = print
 print("__Platform__", __Platform__)
 --是否使用断点调试 （高性能消耗，版本发布必须关闭。）
 local USE_BREAKPOINT_DEBUG = false -- __Platform__ == 0
-CC_ALERT_ERROR = false
 
 local director = cc.Director:getInstance()
 local view = director:getOpenGLView()
 local framesize = view:getFrameSize()
 --是否显示FPS调试信息
-if CC_ALERT_ERROR then
-	 director:setDisplayStats(true)
+if CC_SHOW_FPS then
+    director:setDisplayStats(true)
 end
 
 require "config"
 require "cocos.init"
-require "utils.util"
+-- require "utils.util"
+require "utils.init"
 
 local breakInfoFun , xpCallFun
 if USE_BREAKPOINT_DEBUG then

@@ -9,20 +9,23 @@ function MainScene:onCreate()
     -- local me = 1;
     -- layer:addTo(self)
 
-    local me = display.newSprite("HelloWorld.png")
+    local me = display.newSprite("img2/2.png")
     me:move(display.center)
-    me:addTo(self)
+    me:addTo(self, -1)
+    local size = me:getContentSize()
+    -- print("me", size.width, size.height)
+    me:setScaleX(1334/size.width)
+    me:setScaleY(display.height/size.height)
+    -- me.scaleY = 750/size.height
+    -- me:setContentSize(cc.size(1334, 750))
 
     -- util.delayCall(self, self.wocao, 1)
     -- util.delayCall(me, function() print("22222") end,2)
-    local action = cc.Sequence:create(cc.DelayTime:create(1), cc.CallFunc:create(function()
-        -- if self._defAni then
-        --     self:setRoleAct(self._defAni)
-        -- end
+    -- local action = cc.Sequence:create(cc.DelayTime:create(1), cc.CallFunc:create(function()
         
-    end))
+    -- end))
 
-    me:runAction(action)
+    -- me:runAction(action)
     
     --[[ you can create scene with following comment code instead of using csb file.
     -- add background image

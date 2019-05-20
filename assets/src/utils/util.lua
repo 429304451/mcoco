@@ -1,4 +1,4 @@
-util = class("utill")
+util = class("util")
 ----------------------------------------------
 --工具方法
 ----------------------------------------------
@@ -671,7 +671,15 @@ function util:moveToOtherWordPoint(mNode, toNode)
 end
 
 
-
+function util:fixFullScreen(mNode)
+    -- 我方-相对父节点世界坐标位置
+    -- 目标-相对父节点世界坐标位置
+    -- local oPos = cc.p(toNode:getPositionX(), toNode:getPositionY())
+    -- oPos = toNode:getParent():convertToWorldSpace(oPos)
+    -- -- ### 两者相差
+    -- local sPos = mNode:getParent():convertToNodeSpace(oPos)
+    -- return sPos
+end
 
 
 
