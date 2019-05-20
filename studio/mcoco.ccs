@@ -3,10 +3,14 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Folder Name="csb" />
+        <Folder Name="csb">
+          <Folder Name="forest">
+            <Project Name="bgNode.csd" Type="Node" />
+          </Folder>
+        </Folder>
         <Folder Name="img2">
-          <Image Name="2.png" />
           <Image Name="HelloWorld.png" />
+          <Image Name="2.png" />
         </Folder>
         <Project Name="MainScene.csd" Type="Scene" />
       </RootFolder>

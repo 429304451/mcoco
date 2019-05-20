@@ -16,6 +16,10 @@ function MainScene:onCreate()
     -- print("me", size.width, size.height)
     me:setScaleX(1334/size.width)
     me:setScaleY(display.height/size.height)
+
+    -- me:delayCall(function ()
+    --     print("wocao")
+    -- end, 1)
     -- me.scaleY = 750/size.height
     -- me:setContentSize(cc.size(1334, 750))
 

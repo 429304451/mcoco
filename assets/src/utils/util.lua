@@ -2,7 +2,7 @@ util = class("util")
 ----------------------------------------------
 --工具方法
 ----------------------------------------------
-
+local sharedScheduler = cc.Director:getInstance():getScheduler()
 
 function util.exit()
 	cc.Director:getInstance():endToLua()

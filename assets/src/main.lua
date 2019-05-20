@@ -17,7 +17,6 @@ end
 
 require "config"
 require "cocos.init"
--- require "utils.util"
 require "utils.init"
 
 local breakInfoFun , xpCallFun
@@ -28,14 +27,50 @@ if USE_BREAKPOINT_DEBUG then
 	-- breakInfoFun , xpCallFun = require("LuaDebugjit")("192.168.1.119",7004)
 	cc.Director:getInstance():getScheduler():scheduleScriptFunc(breakInfoFun, 0.3, false)
 end
--- local breakInfoFunc, debugXpCall = require("LuaDebugjit")("localhost", 8008)
--- cc.Director:getInstance():getScheduler():scheduleScriptFunc(breakInfoFunc, 0.5, false)
+
+--重启游戏
+function reloadGame(isreload)
+	local runingscene = cc.Director:getInstance():getRunningScene()
+	if runingscene then
+		runingscene:removeAllChildren()
+	end   
+	local scene = cc.Scene:create()
+	if runingscene then
+		cc.Director:getInstance():replaceScene(scene)
+	else
+		cc.Director:getInstance():runWithScene(scene)
+	end
+
+	BASE_NODE = cc.Node:create()
+	scene:addChild(BASE_NODE)
+
+	util.delayCall(scene, function ()
+		local layer = require("modules.forestdance.forestdance").new(scene)
+		-- scene:addChild(layer)
+	end, 0.1)
+	-- BASE_NODE = cc.Node:create()
+	-- scene:addChild(BASE_NODE)
+
+	-- BASE_NODE:delayCall(function ()
+	-- 	print("wocao")
+	-- end, 1)
+	-- require("app.MyApp"):create():run()
+	-- local me = display.newSprite("img2/2.png")
+ --    me:move(display.center)
+ --    me:addTo(scene, -1)
+ --    local size = me:getContentSize()
+ --    me:setScaleX(1334/size.width)
+ --    me:setScaleY(display.height/size.height)
+end
 
 local function main()
 	util.init()
-	-- require("utils.util")
-    require("app.MyApp"):create():run()
+	collectgarbage("collect")
+	collectgarbage("setpause", 100)
+	collectgarbage("setstepmul", 5000)
 
+    -- require("app.MyApp"):create():run()
+    reloadGame()
 end
 
 local postedLog = {}
@@ -62,7 +97,6 @@ function __G__TRACKBACK__(msg)
 	-- traceObj = function() end
 	return msg
 end
-
 
 local status, msg = xpcall(main, __G__TRACKBACK__)
 if not status then

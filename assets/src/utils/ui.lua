@@ -3,4 +3,5 @@ ui = class("ui")
 -- ui.Login 				= {type=_gm.ID_Main,	id=10001,	clear=false	,path="modules.login.Login",uipath="ui.login.Login"}
 -- ui.Login = 1;
 ui.Login 				= {type=_gm.ID_Main, id=10001, clear=false, path="modules.login.Login", uipath="ui.login.Login"}
-
+ui.puchengBomb 	        = {type=_gm.ID_Win,	hideHall = true, clear=true, path="modules.CardGames.puchengBomb.puchengBomb"}
+ui.puchengBomb 	        = {type=_gm.ID_Win,	hideHall = true, clear=true, path="modules.CardGames.puchengBomb.puchengBomb"}
