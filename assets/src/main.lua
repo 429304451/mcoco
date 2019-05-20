@@ -39,9 +39,6 @@ local function main()
 	-- require("utils.util")
     require("app.MyApp"):create():run()
 
-    for i=1,10 do
-        print(i)
-    end
 end
 
 local postedLog = {}

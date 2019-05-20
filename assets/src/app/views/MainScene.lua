@@ -8,7 +8,6 @@ function MainScene:onCreate()
 
     -- local me = 1;
     -- layer:addTo(self)
-    print("111111")
 
     local me = display.newSprite("HelloWorld.png")
     me:move(display.center)
@@ -20,11 +19,7 @@ function MainScene:onCreate()
         -- if self._defAni then
         --     self:setRoleAct(self._defAni)
         -- end
-        print("wocao")
-
-        print("2")
-
-        print("3")
+        
     end))
 
     me:runAction(action)
