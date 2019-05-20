@@ -11,7 +11,8 @@ cmd.KIND_ID                 = 504
 cmd.GAME_PLAYER             = 100
 
 --游戏版本
-cmd.VERSION  			    = appdf.VersionValue(6,7,0,1)
+-- cmd.VERSION  			    = appdf.VersionValue(6,7,0,1)
+cmd.VERSION = 6.701
 
 --常量定义
 cmd.BET_ITEM_KIND               =4                                   --投注项类型

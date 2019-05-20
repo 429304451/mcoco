@@ -6,7 +6,7 @@
 --[[
 * 通用扩展
 ]]
-local ExternalFun = {}
+ExternalFun = {}
 
 --枚举声明
 function ExternalFun.declarEnum( ENSTART, ... )
@@ -2035,4 +2035,4 @@ end
 
 
 
-return ExternalFun
+-- return ExternalFun

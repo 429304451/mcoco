@@ -3,6 +3,10 @@ local forestdance = class("forestdance", function (scene)
     return cc.Layer:create()
 end)
 
+-- local ExternalFun =  appdf.req(appdf.EXTERNAL_SRC .. "ExternalFun")
+-- local g_var = ExternalFun.req_var
+local cmd = require("modules.forestdance.cmd_game")
+
 forestdance.Tag = {
     clock_num = 1,
     btn_userlist = 2,
@@ -39,10 +43,10 @@ function forestdance:ctor(scene)
     self:initConstValue()
     self:loadRes()
 
-    local csbnode = cc.CSLoader:createNode("csb/forest/bgNode.csb");
-    csbnode:setPosition(display.center)
-    self._rootNode = csbnode
-    self:addChild(csbnode)
+    -- local csbnode = cc.CSLoader:createNode("csb/forest/bgNode.csb");
+    -- csbnode:setPosition(display.center)
+    -- self._rootNode = csbnode
+    -- self:addChild(csbnode)
 
     -- local me = display.newSprite("img2/2.png")
     -- me:move(display.center)
@@ -109,7 +113,7 @@ function forestdance:init3DModel()
     self:addChild(self.m_3dLayer)
 
     self._camera = cc.Camera:createPerspective(60, display.width / display.height, 1, 1000)
-    self._camera:setPosition3D(g_var(cmd).Camera_Normal_Vec3)
+    self._camera:setPosition3D(cmd.Camera_Normal_Vec3)
     self._camera:lookAt(cc.vec3(0, 0, 0))
     self._camera:setCameraFlag(cc.CameraFlag.USER1)
     --self._camera:setDepth(0)
@@ -348,12 +352,143 @@ function forestdance:initAnimal()
     self.m_3dLayer:addChild(self._arrow)
 end
 
+function forestdance:initPlaceJettonLayer()
+    print("initPlaceJettonLayer")
+    self._posStyle = g_var(cmd).NormalPos
+    self._PlaceJettonLayer = ccui.ImageView:create()
+    self._PlaceJettonLayer:setContentSize(cc.size(yl.WIDTH, yl.HEIGHT))
+    self._PlaceJettonLayer:setScale9Enabled(true)
+    self._PlaceJettonLayer:setAnchorPoint(cc.p(0.5, 0.5))
+    self._PlaceJettonLayer:setPosition(yl.WIDTH / 2, - yl.HEIGHT)
+    self._PlaceJettonLayer:setTouchEnabled(true)
+    self:addChild(self._PlaceJettonLayer, GameViewLayer.TopZorder)
+
+    self._PlaceJettonLayer:addTouchEventListener( function(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            --self:popPlaceJettonLayer(g_var(cmd).bottomHidden)
+        end
+    end )
+
+    -- 加载CSB
+    local csbnode = cc.CSLoader:createNode("game_res/PlaceJetton.csb");
+    csbnode:setPosition(yl.WIDTH / 2, yl.HEIGHT / 2)
+    self._PlaceJettonLayer:addChild(csbnode)
+    self._PlaceJettonLayer.rootNode = csbnode
+
+    --@ws 添加弹出按钮
+    local icon_yazhu = csbnode:getChildByName("icon_yazhu")
+    local bIsShowjettonBg = false
+
+    local jettonBg = csbnode:getChildByName("Image_1")
+    icon_yazhu:addTouchEventListener( function(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            if bIsShowjettonBg == true then
+                self:popPlaceJettonLayer(g_var(cmd).NormalPos)
+                bIsShowjettonBg = false
+            else
+                self:popPlaceJettonLayer(g_var(cmd).bottomHidden)
+                bIsShowjettonBg = true
+            end
+            
+        end
+    end )
+    -- @ws 添加弹出按钮
+   --[[
+    icon_yazhu:addTouchEventListener( function(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self:popPlaceJettonLayer(g_var(cmd).NormalPos)
+        end
+
+    end )
+    --]]
+    -- 初始化按钮事件
+    local btns = { }
+    for i = 1, 6 do
+        local btn = csbnode:getChildByName(string.format("btn_%d", i))
+        btn:setTag(i)
+        btn:addTouchEventListener( function(sender, eventType)            
+            if eventType == ccui.TouchEventType.ended then
+                self:setJettonIndex(sender:getTag())
+            end
+        end )
+    end
+
+    -- 下注区域
+    for i = 1, 15 do--g_var(cmd).BET_ITEM_COUNT do
+        local bet = self._PlaceJettonLayer.rootNode:getChildByName(string.format("btn_bet_%d", i))
+        bet:setTag(i)
+        assert(bet)
+        bet:addTouchEventListener( function(sender, eventType)
+            if eventType == ccui.TouchEventType.began then
+                self:showBtnAreaMark(i,true)
+
+            elseif eventType == ccui.TouchEventType.ended then
+                self:showBtnAreaMark(i,false)
+                self:PlaceJettonEvent(sender:getTag())
+
+            end
+        end )
+    end
+
+    -- 续压
+    local btn = self._PlaceJettonLayer.rootNode:getChildByName("btn_continue")
+    btn:addTouchEventListener( function(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            sender:setEnabled(false)
+            self.bContinueRecord = true
+            -- 一局只能续压一次
+            for i = 1, #self._scene.m_lContinueRecord do
+                if self._scene.m_lContinueRecord[i] > 0 then
+                    -- 发送加注 i是逻辑索引
+                    self:continueEvent(i)
+                end
+            end
+        end
+    end )
+    -- @ws 自动按钮和取消按钮
+    btn = self._PlaceJettonLayer.rootNode:getChildByName("btn_cancel")
+    btn:addTouchEventListener(function(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            -- TODO 这里是取消的功能
+            
+            for i = 1, #self._scene._selfBetItemScore do
+                if self._scene._selfBetItemScore[i] > 0 then
+                    -- 发送取消                   
+                    local total = tonumber(self.totalScore[i]:getString())
+                    local myScore = tonumber(self.myScore[i]:getString())
+                    local lastTotal = total - myScore
+                    self.totalScore[i]:setString(lastTotal)
+                    self.myScore[i]:setString("0")
+                    self._scene._selfBetItemScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0}
+                    self._scene._gameModel._sceneData.lBetTotalCount[1][i] = lastTotal
+                    
+                    local dataBuffer = CCmd_Data:create(0)
+                    self._scene:SendData(g_var(cmd).SUB_C_CANCEL_BET, dataBuffer)
+                   
+                end
+            end
+            
+        end
+    end)
+
+    btn = self._PlaceJettonLayer.rootNode:getChildByName("btn_auto")
+    btn:addTouchEventListener(function(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            -- TODO 这里是自动的功能
+            --showToast(self,"功能尚未开放",1)
+           self:topAnimation(true)
+        end
+    end)
+end
+
+
 function forestdance:initCsbRes()
+    print("initCsbRes")
     -- 菜单层
     local rootLayer, csbNode = ExternalFun.loadRootCSB("game_res/Top.csb", self)
     self._rootNode = csbNode
     -- 下注层
-    -- self:initPlaceJettonLayer()
+    self:initPlaceJettonLayer()
 
     -- -- 派彩层
     -- self:initRewardLayer()
@@ -393,9 +528,12 @@ function forestdance:load2DModelCallBack(texture)
         readAnimation("sy", "SYAnim", 15, 0.07)
 
         -- self._scene:removeChildByTag(23) -- ## 等待处理
+        print("load2DModelCallBack222")
         self:init3DModel()
+        print("load2DModelCallBack333")
         self:initAnimal()
         self:initCsbRes()
+
         -- self._resLoadFinish = true
         -- self._scene._bCaijinStatus = true
 
