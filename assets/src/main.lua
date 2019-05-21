@@ -3,6 +3,7 @@ cc.FileUtils:getInstance():setPopupNotify(false)
 -- 平台 0-window,1-linux,2-mac,3-android, 4-iphone,5-ipad
 __Platform__ = cc.Application:getInstance():getTargetPlatform()
 trace = print
+cclog = print
 print("__Platform__", __Platform__)
 --是否使用断点调试 （高性能消耗，版本发布必须关闭。）
 local USE_BREAKPOINT_DEBUG = false -- __Platform__ == 0
