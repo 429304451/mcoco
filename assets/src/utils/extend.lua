@@ -177,9 +177,8 @@ function Node:pp(pxOrCcp, py)
     return self
 end
 -- 这里等于做一个delayAction 动作成立的前提条件是自身存在 如果被删了事件一起没了  如果要事件成为全局也就是node删除事件还在 参见 util.delayCall
-function Node:delayCall(func, delayTime, bRepeat)
-	-- if self._delayAction then
-	local action = cc.Sequence:create(cc.DelayTime:create(delayTime),cc.CallFunc:create(func))
+function Node:delayCall(callFunc, delayTime, bRepeat)
+	local action = cc.Sequence:create(cc.DelayTime:create(delayTime),cc.CallFunc:create(callFunc))
 	if bRepeat then
 		if type(bRepeat) == "boolean" then
 			action = cc.RepeatForever:create(action)
@@ -190,4 +189,53 @@ function Node:delayCall(func, delayTime, bRepeat)
 	self:runAction(action)
 end
 
+-- ### 上面是对所有的node的拓展的 下面几个是对button属性的进行拓展的
+local Widget = ccui.Widget
+function Widget:onClick(callFunc, touchSilence, Shield)
+	self.lastClickTime = 0; -- 上次点击时间
+	self.clickCdTime = 0.3  -- 毫秒
 
+    self:setSwallowTouches(true)
+
+    local oldScale = self:getScale()
+    local clickScale = oldScale*0.9
+    local oldOpacity = self:getOpacity()
+    local clickOpacity = oldOpacity*0.9
+
+    self:onTouch(function(event)
+        -- local pSender = event.target
+        if "began" == event.name then
+            if not touchSilence then
+	            self:setScale(clickScale)
+	            self:setOpacity(clickOpacity)
+	        end
+        elseif "moved" == event.name then
+        	-- 没做移动处理
+        elseif "ended" == event.name then
+        	if not touchSilence then
+	            self:setScale(oldScale)
+	            self:setOpacity(oldOpacity)
+	            util.SoundClick()
+	        end
+	        if not Shield then
+		        local now = util.getNow()
+	            if now - self.lastClickTime < self.clickCdTime then
+	                print("---屏蔽过快点击---")
+	                return
+	            end
+	            self.lastClickTime = now
+	        end
+            if callFunc then
+				callFunc()
+			end
+        else
+        	print("走到这里的一般是取消吧")
+            if not touchSilence then
+	            self:setScale(oldScale)
+	            self:setOpacity(oldOpacity)
+	        end
+        end
+
+    end, false, swallowTouches)
+    return self
+end
