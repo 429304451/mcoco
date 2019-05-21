@@ -3,9 +3,58 @@ util = class("util")
 --工具方法
 ----------------------------------------------
 local sharedScheduler = cc.Director:getInstance():getScheduler()
+util.PrintPosDiff = 15;
+function util.mlog( ... )
+	-- 如果遇到bool值好像会出现问题
+	local args = {...}
+	for k,v in pairs(args) do
+		if type(v) == "boolean" then
+			args[k] = tostring(v)
+		end
+	end
+	-- 打印出现在屏幕上的初始位置
+	util.PrintPosDiff = ifnil(util.PrintPosDiff, 15)
+	if util.PrintPosDiff > 1 then
+		util.PrintPosDiff = util.PrintPosDiff - 1
+	else
+		util.PrintPosDiff = util.PrintPosDiff + 15
+	end
+	-- 打印内容
+	local content = table.concat(args, " ; ");
+	print(content)
+	local director = cc.Director:getInstance();
+	local scene = director:getRunningScene();
+	local viewsize = director:getWinSize();
+	-- 生成打印内容ttf放在初始位置
+	local ttfConfig = {}
+    ttfConfig.fontFilePath = "img2/font/MSYH.TTF"
+    ttfConfig.fontSize = 30
+
+	local mNode = cc.Label:createWithTTF(ttfConfig, content, cc.TEXT_ALIGNMENT_CENTER, viewsize.width-20)
+	mNode:setColor(cc.c3b(80, 19, 0));
+	scene:addChild(mNode, 99);
+	mNode:setPosition(cc.p(viewsize.width/2, util.PrintPosDiff*20));
+	-- 往上飘的时间
+	local uTime = 6.5;
+	local uAction = cc.Spawn:create(
+		cc.FadeOut:create(uTime), 
+		cc.MoveBy:create(uTime, cc.p(0, 400))
+	);
+	local action = cc.Sequence:create(uAction, cc.RemoveSelf:create());
+	mNode:runAction(action);
+end
 
 function util.exit()
 	cc.Director:getInstance():endToLua()
+end
+
+function util.SoundClick()
+	-- cc.Director:getInstance():endToLua()
+	AudioEngine.playEffect("audio/common/Common_Panel_Dialog_Pop_Sound.mp3")
+end
+
+function util.getNow () 
+	return os.time()
 end
 
 function util.getKey(key,def)

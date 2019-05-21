@@ -7,47 +7,6 @@ function ifnil( param, default )
 	end
 end
 
--- 在屏幕上打印往上飘一会消失 一般作为临时功能替代标记
-function mlog( ... )
-	-- 如果遇到bool值好像会出现问题
-	local args = {...}
-	for k,v in pairs(args) do
-		if type(v) == "boolean" then
-			args[k] = tostring(v)
-		end
-	end
-	-- 打印出现在屏幕上的初始位置
-	PrintPosDiff = ifnil(PrintPosDiff, 15)
-	if PrintPosDiff > 1 then
-		PrintPosDiff = PrintPosDiff - 1
-	else
-		PrintPosDiff = PrintPosDiff + 15
-	end
-	-- 打印内容
-	local content = table.concat(args, " ; ");
-	print(content)
-	local director = cc.Director:getInstance();
-	local scene = director:getRunningScene();
-	local viewsize = director:getWinSize();
-	-- 生成打印内容ttf放在初始位置
-	local ttfConfig = {}
-    ttfConfig.fontFilePath = "img2/font/MSYH.TTF"
-    ttfConfig.fontSize = 30
-
-	local mNode = cc.Label:createWithTTF(ttfConfig, content, cc.TEXT_ALIGNMENT_CENTER, viewsize.width-20)
-	mNode:setColor(cc.c3b(80, 19, 0));
-	scene:addChild(mNode, 99);
-	mNode:setPosition(cc.p(viewsize.width/2, PrintPosDiff*20));
-	-- 往上飘的时间
-	local uTime = 6.5;
-	local uAction = cc.Spawn:create(
-		cc.FadeOut:create(uTime), 
-		cc.MoveBy:create(uTime, cc.p(0, 400))
-	);
-	local action = cc.Sequence:create(uAction, cc.RemoveSelf:create());
-	mNode:runAction(action);
-end
-
 -- 基础node拓展方法
 local Node = cc.Node
 -- 通用型点击事件绑定
@@ -125,40 +84,45 @@ function Node:bindTouchLocate()
 	self:bindTouch(args)
 	return self
 end
--- 快速绑定点击事件 
-function Node:quickBt(callFunc)
-	-- 设置点击cd时间
-	self.InCdTime = false  
-	local function runResponseCd(cdTime)
-		local cdTime = cdTime or 0.3
-		self.InCdTime = true
-		local delay = cc.DelayTime:create(cdTime)
-		local function cFun()
-			self.InCdTime = false
-		end
-		local sequence = cc.Sequence:create(delay, cc.CallFunc:create(cFun))
-		self:runAction(sequence)
-	end
+-- 快速绑定点击事件  快速绑定点击函数 touchSilence-是否静默点击 Shield-是否有点击cdTime
+function Node:quickBt(callFunc, touchSilence, Shield)
+	self.lastClickTime = 0; -- 上次点击时间
+	self.clickCdTime = 0.3  -- 毫秒
+    self.canTouch = true;
 
-	local args = {}
+    local args = {}
 	args.onTouchBegan = function (touch, event)
+		if self.canTouch == false then
+			return false
+		end
 		self.BeganScale_ = self:getScale();
         self.BeganOpacity_ = self:getOpacity();
 
-        self:setScale(self.BeganScale_*0.9);
-        self:setOpacity(self.BeganOpacity_*0.9);
+        if not touchSilence then
+        	self:setScale(self.BeganScale_*0.9);
+        	self:setOpacity(self.BeganOpacity_*0.9);
+        end
+       
 		return true
 	end
 	args.onTouchEnded = function (touch, event)
-		self:setScale(self.BeganScale_);
-        self:setOpacity(self.BeganOpacity_);
-        -- util.playSound("Common_Panel_Dialog_Pop_Sound", false)
-        -- 是否点击太快
-        if self.InCdTime then
-        	print("-------------响应屏蔽------------")
-        	return
+		-- if self.canTouch == false then
+		-- 	return false
+		-- end
+		if not touchSilence then
+        	self:setScale(self.BeganScale_);
+        	self:setOpacity(self.BeganOpacity_);
+        	-- util.mlog("soundClick")
+        	util.SoundClick()
         end
-        runResponseCd(0.5)
+        if not Shield then
+        	local now = util.getNow()
+        	if now - self.lastClickTime < self.clickCdTime then
+        		print("---屏蔽过快点击---")
+        		return
+        	end
+        	self.lastClickTime = now;
+        end
 
         local target = event:getCurrentTarget()
 		local touchPoint = touch:getLocation()
@@ -172,6 +136,7 @@ function Node:quickBt(callFunc)
 			end
 		end
 	end
+
 	self:bindTouch(args)
 	return self
 end
