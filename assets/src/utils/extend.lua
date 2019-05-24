@@ -1,4 +1,4 @@
-
+-- Create By Changwei on 2019/05/23 对于node和button的一些扩展类
 function ifnil( param, default )
 	if param == nil then
 		return default

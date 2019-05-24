@@ -10,20 +10,22 @@ print("__Platform__", __Platform__)
 LOG_FILE_NAME = "D:\\xampp\\htdocs\\mGit\\mcoco\\assets\\srcGAME_LOG.txt"  
 LOG_FILE_PATH = io.open(LOG_FILE_NAME,'w+')  
 --重写print 让打印的东西能同时写入到文件里  
-old_print = print  
-print = function (...) 
-    if not ... then return end  
-    local time = os.date("[%H:%M:%S]", os.time())
-    old_print(...)  
-    --写入  
-    local args = {...}  
-    local s = time
-    for i , v in ipairs(args) do 
-        s = s .. "\t" .. tostring(v)  
-    end  
-    LOG_FILE_PATH:write(tostring(s).."\n")  
-    LOG_FILE_PATH:flush()  
-end 
+-- old_print = print  
+-- print = function (...) 
+--     if not ... then return end  
+--     local time = os.date("[%H:%M:%S]", os.time())
+--     old_print(...)  
+--     --写入  
+--     local args = {...}  
+--     local s = time
+--     for i , v in ipairs(args) do 
+--         s = s .. "\t" .. tostring(v)  
+--     end  
+--     LOG_FILE_PATH:write(tostring(s).."\n")  
+--     LOG_FILE_PATH:flush()  
+-- end 
+
+_game_require = require
 --是否使用断点调试 （高性能消耗，版本发布必须关闭。）
 local USE_BREAKPOINT_DEBUG = false -- __Platform__ == 0
 
@@ -65,8 +67,10 @@ function reloadGame(isreload)
 	-- scene:addChild(BASE_NODE)
 
 	util.delayCall(scene, function ()
-		require("modules.forestdance.yl")
-		local layer = require("modules.forestdance.forestdance").new(scene)
+		-- require("modules.forestdance.yl")
+		-- local layer = require("modules.forestdance.forestdance").new(scene)
+		-- GameViewLayer
+		local layer = require("modules.forestdance.GameLayer").new(scene)
 		-- local layer = require("modules.forestdance.GameLayer").new(nil, scene)
 	end, 0.1)
 	-- BASE_NODE = cc.Node:create()
@@ -85,7 +89,7 @@ function reloadGame(isreload)
 end
 
 local function main()
-	util.init()
+	-- util.init()
 	collectgarbage("collect")
 	collectgarbage("setpause", 100)
 	collectgarbage("setstepmul", 5000)

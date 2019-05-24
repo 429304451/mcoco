@@ -125,7 +125,7 @@ function ui.setNodeMap(node, tbl)
 	return
 end
 
---查找CSD下节点
+-- 查找CSD下节点
 function ui.seekNodeByName(parent, name)
 	if not parent then
 		return

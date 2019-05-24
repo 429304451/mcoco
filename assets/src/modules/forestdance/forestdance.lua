@@ -141,88 +141,88 @@ function forestdance:init3DModel()
     self.m_3dLayer:addChild(sprite)
     -- @ws 加载背景颜色
 
-    --local PointLight = cc.PointLight:create(cc.vec3(0,300,0), cc.c3b(255,255,219),2000.0)
-    --[[
-    local AmbientLight = cc.DirectionLight:create(cc.vec3(0,-10,-10), cc.c3b(255,255,219))
+    -- --local PointLight = cc.PointLight:create(cc.vec3(0,300,0), cc.c3b(255,255,219),2000.0)
+    -- --[[
+    -- local AmbientLight = cc.DirectionLight:create(cc.vec3(0,-10,-10), cc.c3b(255,255,219))
     
-        --AmbientLight:retain()
-    AmbientLight:setCameraMask(cc.CameraFlag.USER2)
-    self:addChild(AmbientLight)
-    --]]
-    -- @ws 墙体
-     -- @ws 墙体变色
-    sprite = cc.Sprite3D:create("3d_res/model_4/qiangti_ani.c3b")
-    sprite:setScale(0.04)
-    sprite:setPosition3D(cc.vec3(0,-20,-13))
-    sprite:setRotation3D(cc.vec3(90, 0, 180))
-    sprite:setVisible(false)
-    sprite:setCameraMask(cc.CameraFlag.USER1)
-    self.m_3dLayer:addChild(sprite)
+    --     --AmbientLight:retain()
+    -- AmbientLight:setCameraMask(cc.CameraFlag.USER2)
+    -- self:addChild(AmbientLight)
+    -- --]]
+    -- -- @ws 墙体
+    --  -- @ws 墙体变色
+    -- sprite = cc.Sprite3D:create("3d_res/model_4/qiangti_ani.c3b")
+    -- sprite:setScale(0.04)
+    -- sprite:setPosition3D(cc.vec3(0,-20,-13))
+    -- sprite:setRotation3D(cc.vec3(90, 0, 180))
+    -- sprite:setVisible(false)
+    -- sprite:setCameraMask(cc.CameraFlag.USER1)
+    -- self.m_3dLayer:addChild(sprite)
 
-    sprite:setTexture("3d_res/model_4/qiangti_ani.png")
-    sprite:setColor(cc.c3b(235,218,102))
-    self.m_winColor = sprite
+    -- sprite:setTexture("3d_res/model_4/qiangti_ani.png")
+    -- sprite:setColor(cc.c3b(235,218,102))
+    -- self.m_winColor = sprite
 
 
-    sprite = cc.Sprite3D:create("3d_res/model_4/qiangti_ani.c3b")
-    sprite:setScale(0.04)
-    sprite:setPosition3D(cc.vec3(0,-20,-13))
-    sprite:setRotation3D(cc.vec3(90, 0, 180))
-    sprite:setCameraMask(cc.CameraFlag.USER1)
-    self.m_3dLayer:addChild(sprite)
+    -- sprite = cc.Sprite3D:create("3d_res/model_4/qiangti_ani.c3b")
+    -- sprite:setScale(0.04)
+    -- sprite:setPosition3D(cc.vec3(0,-20,-13))
+    -- sprite:setRotation3D(cc.vec3(90, 0, 180))
+    -- sprite:setCameraMask(cc.CameraFlag.USER1)
+    -- self.m_3dLayer:addChild(sprite)
 
-    sprite:setTexture("3d_res/model_4/qiangti_lanse.png")
+    -- sprite:setTexture("3d_res/model_4/qiangti_lanse.png")
 
-    sprite = cc.Sprite3D:create("3d_res/model_4/tiaowen.c3b")
-    sprite:setScale(0.04)
-    sprite:setPosition3D(cc.vec3(0,-20,-13))
-    sprite:setRotation3D(cc.vec3(90, 0, 180))
-    sprite:setCameraMask(cc.CameraFlag.USER1)
-    self.m_3dLayer:addChild(sprite)
+    -- sprite = cc.Sprite3D:create("3d_res/model_4/tiaowen.c3b")
+    -- sprite:setScale(0.04)
+    -- sprite:setPosition3D(cc.vec3(0,-20,-13))
+    -- sprite:setRotation3D(cc.vec3(90, 0, 180))
+    -- sprite:setCameraMask(cc.CameraFlag.USER1)
+    -- self.m_3dLayer:addChild(sprite)
 
-    sprite:setTexture("3d_res/model_4/tiaowen.png")
-    sprite:setColor(cc.c3b(150,160,25))
-    self.tiaowen = sprite
+    -- sprite:setTexture("3d_res/model_4/tiaowen.png")
+    -- sprite:setColor(cc.c3b(150,160,25))
+    -- self.tiaowen = sprite
 
-    --self.tiaowen:runAction(cc.Blink:create(3.0,5))
+    -- --self.tiaowen:runAction(cc.Blink:create(3.0,5))
 
-    -- 加载纹理
-    --local file = "3d_res/model_4/changjing.png"
-    --sprite:setTexture(file)
+    -- -- 加载纹理
+    -- --local file = "3d_res/model_4/changjing.png"
+    -- --sprite:setTexture(file)
 
-    for i = 1, 6 do
-        local wujian1 = cc.Sprite3D:create("3d_res/model_0/wujian.c3b")
-        wujian1:setScale(1.0)
-        wujian1:setPosition3D(cc.vec3(0, -0.1, 0))
-        wujian1:setRotation3D(cc.vec3(0, 60 *(i - 1) + 30, 0))
-        wujian1:setGlobalZOrder(1)
-        wujian1:setCameraMask(cc.CameraFlag.USER2)
-        self.m_3dLayer:addChild(wujian1)
+    -- for i = 1, 6 do
+    --     local wujian1 = cc.Sprite3D:create("3d_res/model_0/wujian.c3b")
+    --     wujian1:setScale(1.0)
+    --     wujian1:setPosition3D(cc.vec3(0, -0.1, 0))
+    --     wujian1:setRotation3D(cc.vec3(0, 60 *(i - 1) + 30, 0))
+    --     wujian1:setGlobalZOrder(1)
+    --     wujian1:setCameraMask(cc.CameraFlag.USER2)
+    --     self.m_3dLayer:addChild(wujian1)
 
-        local wujian2 = cc.Sprite3D:create("3d_res/model_1/wujian02.c3b")
-        wujian2:setScale(1.0)
-        wujian2:setPosition3D(cc.vec3(0, -0.1, 0))
-        wujian2:setRotation3D(cc.vec3(0, 60 *(i - 1) + 30, 0))
-        wujian2:setGlobalZOrder(1)
-        wujian2:setCameraMask(cc.CameraFlag.USER2)
-        self.m_3dLayer:addChild(wujian2)
+    --     local wujian2 = cc.Sprite3D:create("3d_res/model_1/wujian02.c3b")
+    --     wujian2:setScale(1.0)
+    --     wujian2:setPosition3D(cc.vec3(0, -0.1, 0))
+    --     wujian2:setRotation3D(cc.vec3(0, 60 *(i - 1) + 30, 0))
+    --     wujian2:setGlobalZOrder(1)
+    --     wujian2:setCameraMask(cc.CameraFlag.USER2)
+    --     self.m_3dLayer:addChild(wujian2)
 
-        local wujian3 = cc.Sprite3D:create("3d_res/model_3/wujian03.c3b")
-        wujian3:setScale(1.0)
-        wujian3:setPosition3D(cc.vec3(0, -0.1, 0))
-        wujian3:setRotation3D(cc.vec3(0, 60 *(i - 1) + 30, 0))
-        wujian3:setGlobalZOrder(1)
-        wujian3:setCameraMask(cc.CameraFlag.USER2)
-        self.m_3dLayer:addChild(wujian3)
+    --     local wujian3 = cc.Sprite3D:create("3d_res/model_3/wujian03.c3b")
+    --     wujian3:setScale(1.0)
+    --     wujian3:setPosition3D(cc.vec3(0, -0.1, 0))
+    --     wujian3:setRotation3D(cc.vec3(0, 60 *(i - 1) + 30, 0))
+    --     wujian3:setGlobalZOrder(1)
+    --     wujian3:setCameraMask(cc.CameraFlag.USER2)
+    --     self.m_3dLayer:addChild(wujian3)
 
-        local wujian4 = cc.Sprite3D:create("3d_res/model_2/wujian04.c3b")
-        wujian4:setScale(1.0)
-        wujian4:setPosition3D(cc.vec3(0, -0.1, 0))
-        wujian4:setRotation3D(cc.vec3(0, 60 *(i - 1), 0))
-        wujian4:setGlobalZOrder(1)
-        wujian4:setCameraMask(cc.CameraFlag.USER2)
-        self.m_3dLayer:addChild(wujian4)
-    end
+    --     local wujian4 = cc.Sprite3D:create("3d_res/model_2/wujian04.c3b")
+    --     wujian4:setScale(1.0)
+    --     wujian4:setPosition3D(cc.vec3(0, -0.1, 0))
+    --     wujian4:setRotation3D(cc.vec3(0, 60 *(i - 1), 0))
+    --     wujian4:setGlobalZOrder(1)
+    --     wujian4:setCameraMask(cc.CameraFlag.USER2)
+    --     self.m_3dLayer:addChild(wujian4)
+    -- end
 end
 
 function forestdance:getAnimRes(animIndex)
@@ -415,8 +415,182 @@ function forestdance:topAnimation(bool,num)
         end),cc.MoveTo:create(1,cc.p(37,21))))
       
     end
-   
 end
+function forestdance:popPlaceJettonLayer(pos)
+    if pos == cmd.NormalPos or not pos then
+        -- 弹出
+        self._PlaceJettonLayer:setVisible(true)
+        self._PlaceJettonLayer:runAction(cc.MoveTo:create(0.2, cc.p(display.width / 2, display.height / 2 - 60)))
+        self._posStyle = cmd.NormalPos
+    elseif pos == cmd.bottomHidden then
+        -- 弹到底部
+        self._PlaceJettonLayer:setVisible(true)
+        self._PlaceJettonLayer:runAction(cc.MoveTo:create(0.2, cc.p(display.width / 2, -250)))
+        self._posStyle = cmd.bottomHidden
+    elseif pos == cmd.hidden then
+        -- 全部隐藏
+        self._PlaceJettonLayer:runAction(
+        cc.Sequence:create(cc.MoveTo:create(0.2, cc.p(yl.WIDTH / 2, - yl.HEIGHT)),
+        cc.CallFunc:create( function()
+            self._PlaceJettonLayer:setVisible(false)
+            self._posStyle = cmd.hidden
+        end ))
+        )
+    end
+end
+
+function forestdance:setJettonIndex(index)
+    if index == -1 then
+        self:blinkEffect(false)
+        return
+    end
+
+    self._curJettonIndex = index
+    self:blinkEffect(true, index)
+end
+
+function forestdance:blinkEffect(isAction, index)
+    local circles = { }
+    for i = 1, 6 do
+        local circle = self._PlaceJettonLayer.rootNode:getChildByName(string.format("circle_%d", i))
+        table.insert(circles, circle)
+        circle:setVisible(false)
+        circle:stopAllActions()
+    end
+
+    if true == isAction then
+        local circle = circles[index]
+        circle:setVisible(true)
+        circle:runAction(cc.RepeatForever:create(cc.Blink:create(1, 2)))
+    end
+end
+
+-- @ws 点击按钮效果
+function forestdance:showBtnAreaMark(btnNum,bShow)
+    local Node_mark = self._PlaceJettonLayer.rootNode:getChildByName("Node_gray")
+    local mark = Node_mark:getChildByName(string.format("gray_%d",btnNum))
+    if bShow then
+        mark:setVisible(true)
+    else
+        mark:setVisible(false)
+    end
+end
+function forestdance:PlaceJettonEvent(tag)
+    util.mlog("下注", tag)
+    -- ## 等待处理
+    -- if self._curJettonIndex <= 0 or self.m_wBankerUser == self:GetMeUserItem().wChairID then
+    --     return
+    -- end
+
+    -- local itemScore = self._selfBetItemScore[tag]
+    -- local topLimit = self._gameModel._sceneData.lUserItemBetTopLimit
+    -- if itemScore >= topLimit then
+    --     return
+    -- end
+
+
+    -- if itemScore + self._jettonArray[self._curJettonIndex] > topLimit then
+    --     local index = 1
+    --     if self._curJettonIndex == 1 then
+    --         index = -1
+    --     end
+    --     self:setJettonIndex(index)
+    --     return
+    -- end
+
+    -- local allScore = 0
+    -- topLimit = self._gameModel._sceneData.lUserTotalBetTopLimit
+    -- for i = 1, g_var(cmd).BET_ITEM_COUNT do
+    --     allScore = allScore + self._selfBetItemScore[i]
+    -- end
+
+    -- if allScore >= topLimit then
+    --     return
+    -- end
+
+    -- if allScore + self._jettonArray[self._curJettonIndex] > topLimit then
+    --     local index = 1
+    --     if self._curJettonIndex == 1 then
+    --         index = -1
+    --     end
+    --     self:setJettonIndex(index)
+    --     return
+    -- end
+
+    -- local item = self:GetMeUserItem()
+    -- local tmp = item.lScore - self._jettonArray[self._curJettonIndex]
+
+    -- if tmp < 0 then
+    --     local index = 1
+    --     if self._curJettonIndex == 1 then
+    --         index = -1
+    --     end
+    --     self:setJettonIndex(index)
+    --     return
+    -- end
+
+    -- item.lScore = tmp
+    -- self._selfBetItemScore[tag] = self._selfBetItemScore[tag] + self._jettonArray[self._curJettonIndex]
+    -- if not self.m_bPlaceRecord then
+    --     self.m_lContinueRecord = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0,0,0}
+    --     self.m_bPlaceRecord = true
+    --     self.bContinueRecord = true
+    -- end
+
+    -- self.m_lContinueRecord[tag] = self.m_lContinueRecord[tag] + self._jettonArray[self._curJettonIndex]
+
+    -- -- 发送加注
+    -- local dataBuffer = CCmd_Data:create(9)
+    -- local itemIndex = tag - 1
+    -- dataBuffer:pushbyte(itemIndex)
+    -- dataBuffer:pushscore(self._jettonArray[self._curJettonIndex])
+    -- self:SendData(g_var(cmd).SUB_C_USER_BET, dataBuffer)
+
+    -- self:playEffect("BetItem.wav")
+end
+
+function forestdance:continueEvent(index)
+    util.mlog("续压", index)
+    -- ## 等待处理
+    -- if self.m_wBankerUser == self._scene:GetMeUserItem().wChairID then
+    --     return
+    -- end
+
+    -- local itemScore = self._scene.m_lContinueRecord[index]
+    -- local topLimit = self._scene._gameModel._sceneData.lUserItemBetTopLimit
+    -- if itemScore >= topLimit then
+    --     return
+    -- end
+
+    -- local allScore = 0
+    -- topLimit = self._scene._gameModel._sceneData.lUserTotalBetTopLimit
+    -- for i = 1, g_var(cmd).BET_ITEM_COUNT do
+    --     allScore = allScore + self._scene.m_lContinueRecord[i]
+    -- end
+
+    -- if allScore >= topLimit then
+    --     return
+    -- end
+
+    -- local item = self._scene:GetMeUserItem()
+    -- local tmp = item.lScore - self._scene.m_lContinueRecord[index]
+
+    -- if tmp < 0 then
+    --     return
+    -- end
+
+    -- item.lScore = tmp
+    -- self._scene._selfBetItemScore[index] = self._scene.m_lContinueRecord[index]
+
+    -- -- 发送加注
+    -- local dataBuffer = CCmd_Data:create(9)
+    -- local itemIndex = index - 1
+    -- dataBuffer:pushbyte(itemIndex)
+    -- dataBuffer:pushscore(self._scene.m_lContinueRecord[index])
+    -- self._scene:SendData(cmd.SUB_C_USER_BET, dataBuffer)
+    
+end
+
 function forestdance:initPlaceJettonLayer()
     print("initPlaceJettonLayer")
     self._posStyle = cmd.NormalPos
@@ -439,13 +613,15 @@ function forestdance:initPlaceJettonLayer()
     csbnode:setPosition(display.width / 2, display.height / 2)
     self._PlaceJettonLayer:addChild(csbnode)
     self._PlaceJettonLayer.rootNode = csbnode
+    self.msg_PlaceJetton = {};
+    ui.setNodeMap(csbnode, self.msg_PlaceJetton)
 
     --@ws 添加弹出按钮
-    local icon_yazhu = csbnode:getChildByName("icon_yazhu")
+    -- local icon_yazhu = csbnode:getChildByName("icon_yazhu")
     local bIsShowjettonBg = false
 
-    local jettonBg = csbnode:getChildByName("Image_1")
-    icon_yazhu:addTouchEventListener( function(sender, eventType)
+    -- local jettonBg = csbnode:getChildByName("Image_1")
+    self.msg_PlaceJetton.icon_yazhu:addTouchEventListener( function(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             if bIsShowjettonBg == true then
                 self:popPlaceJettonLayer(cmd.NormalPos)
@@ -502,8 +678,8 @@ function forestdance:initPlaceJettonLayer()
             sender:setEnabled(false)
             self.bContinueRecord = true
             -- 一局只能续压一次
-            for i = 1, #self._scene.m_lContinueRecord do
-                if self._scene.m_lContinueRecord[i] > 0 then
+            for i = 1, #self.m_lContinueRecord do
+                if self.m_lContinueRecord[i] > 0 then
                     -- 发送加注 i是逻辑索引
                     self:continueEvent(i)
                 end
@@ -516,19 +692,19 @@ function forestdance:initPlaceJettonLayer()
         if eventType == ccui.TouchEventType.ended then
             -- TODO 这里是取消的功能
             
-            for i = 1, #self._scene._selfBetItemScore do
-                if self._scene._selfBetItemScore[i] > 0 then
+            for i = 1, #self._selfBetItemScore do
+                if self._selfBetItemScore[i] > 0 then
                     -- 发送取消                   
                     local total = tonumber(self.totalScore[i]:getString())
                     local myScore = tonumber(self.myScore[i]:getString())
                     local lastTotal = total - myScore
                     self.totalScore[i]:setString(lastTotal)
                     self.myScore[i]:setString("0")
-                    self._scene._selfBetItemScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0}
-                    self._scene._gameModel._sceneData.lBetTotalCount[1][i] = lastTotal
+                    self._selfBetItemScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0}
+                    self._gameModel._sceneData.lBetTotalCount[1][i] = lastTotal
                     
                     local dataBuffer = CCmd_Data:create(0)
-                    self._scene:SendData(cmd.SUB_C_CANCEL_BET, dataBuffer)
+                    -- self:SendData(cmd.SUB_C_CANCEL_BET, dataBuffer) -- ## 等待处理
                    
                 end
             end
@@ -544,14 +720,38 @@ function forestdance:initPlaceJettonLayer()
            self:topAnimation(true)
         end
     end)
+    print("initPlaceJettonLayer3333")
 end
-
 
 function forestdance:initCsbRes()
     print("initCsbRes")
     -- 菜单层
     local rootLayer, csbNode = ExternalFun.loadRootCSB("game_res/Top.csb", self)
     self._rootNode = csbNode
+    local btn_close = csbNode:getChildByName("btn_close")
+    -- btn_close:setScale(2)
+    -- btn_close:quickBt(function ()
+    --     util.mlog("quickBt()")
+    -- end)
+
+    -- local me = display.newSprite("img2/2.png")
+    -- me:move(display.center)
+    -- me:addTo(csbNode, 99)
+    -- me:quickBt(function ()
+    --     util.mlog("quickBt()")
+    -- end)
+
+    -- me:onClick(function ()
+    --     util.mlog("onClick()")
+    -- end)
+    -- me:addTouchEventListener(function(sender, eventType)
+    --     if eventType == ccui.TouchEventType.ended then
+    --         -- TODO 这里是自动的功能
+    --         --showToast(self,"功能尚未开放",1)
+    --        -- self:topAnimation(true)
+    --        util.mlog("addTouchEventListener")
+    --     end
+    -- end)
     -- 下注层
     self:initPlaceJettonLayer()
 
@@ -592,31 +792,31 @@ function forestdance:load2DModelCallBack(texture)
         readAnimation("sx", "SXAnim", 15, 0.07)
         readAnimation("sy", "SYAnim", 15, 0.07)
 
-        -- self._scene:removeChildByTag(23) -- ## 等待处理
+        -- self:removeChildByTag(23) -- ## 等待处理
 
         self:init3DModel()
-        self:initAnimal()
-        self:initCsbRes()
+        -- self:initAnimal()
+        -- self:initCsbRes()
         print("load2DModelCallBack333")
 
         self._resLoadFinish = true
         self._bCaijinStatus = true
 
-        if self._gameModel._bScene then
-        --     self._animLayer:setRotation3D(cc.vec3(0, 360 - self._scene._gameModel._sceneData.nAnimalRotateAngle * 15, 0))
-        --     self._arrow:setRotation3D(cc.vec3(0, self._scene._gameModel._sceneData.nPointerRatateAngle * 15 + 185, 0))
-        end
+        -- if self._gameModel._bScene then
+        --     self._animLayer:setRotation3D(cc.vec3(0, 360 - self._gameModel._sceneData.nAnimalRotateAngle * 15, 0))
+        --     self._arrow:setRotation3D(cc.vec3(0, self._gameModel._sceneData.nPointerRatateAngle * 15 + 185, 0))
+        -- end
 
-        -- if self._scene._gameStatus <= g_var(cmd).IDI_GAME_BET then
+        -- if self._gameStatus <= g_var(cmd).IDI_GAME_BET then
         --     -- 空闲或下注状态
         --     self._loadLayer:removeFromParent()
         --     self._loadLayer = nil
 
         --     self:updateColor()
 
-        --     self:setGameStatus(self._scene._gameStatus)
+        --     self:setGameStatus(self._gameStatus)
 
-        --     if self._scene._gameStatus == g_var(cmd).IDI_GAME_BET then
+        --     if self._gameStatus == g_var(cmd).IDI_GAME_BET then
         --         -- 下注状态
         --         -- 更新区域倍率
         --         self:updateAreaMultiple()
@@ -685,33 +885,69 @@ function forestdance:loadRes()
     cc.Director:getInstance():getTextureCache():addImageAsync("game_res/anim_sy.png", handler(self, self.load2DModelCallBack))
 
 
-    -- -- 3D资源
-    -- local modelFiles = { }
-    -- table.insert(modelFiles, "3d_res/model_0/wujian.c3b")
-    -- table.insert(modelFiles, "3d_res/model_1/wujian02.c3b")
-    -- table.insert(modelFiles, "3d_res/model_2/wujian04.c3b")
-    -- table.insert(modelFiles, "3d_res/model_3/wujian03.c3b")
-    -- table.insert(modelFiles, "3d_res/model_4/wujian07.c3b")
-    -- table.insert(modelFiles, "3d_res/model_5/wujian07.c3b")
-    -- table.insert(modelFiles, "3d_res/model_6/wujian08.c3b")
-    -- table.insert(modelFiles, "3d_res/model_7/wujian11.c3b")
-    -- table.insert(modelFiles, "3d_res/model_8/wujian10.c3b")
-    -- table.insert(modelFiles, "3d_res/model_bottom/dibu.c3b")
-    -- table.insert(modelFiles, "3d_res/model_bottom1/dibu2.c3b")
-    -- table.insert(modelFiles, "3d_res/model_monkey/monkey.c3b")
-    -- table.insert(modelFiles, "3d_res/model_lion/lion.c3b")
-    -- table.insert(modelFiles, "3d_res/model_panda/panda.c3b")
-    -- table.insert(modelFiles, "3d_res/model_rabbit/rabbit.c3b")
-    -- table.insert(modelFiles, "3d_res/model_seat/di.c3b")
+    -- 3D资源
+    local modelFiles = { }
+    table.insert(modelFiles, "3d_res/model_0/wujian.c3b")
+    table.insert(modelFiles, "3d_res/model_1/wujian02.c3b")
+    table.insert(modelFiles, "3d_res/model_2/wujian04.c3b")
+    table.insert(modelFiles, "3d_res/model_3/wujian03.c3b")
+    table.insert(modelFiles, "3d_res/model_4/wujian07.c3b")
+    table.insert(modelFiles, "3d_res/model_5/wujian07.c3b")
+    table.insert(modelFiles, "3d_res/model_6/wujian08.c3b")
+    table.insert(modelFiles, "3d_res/model_7/wujian11.c3b")
+    table.insert(modelFiles, "3d_res/model_8/wujian10.c3b")
+    table.insert(modelFiles, "3d_res/model_bottom/dibu.c3b")
+    table.insert(modelFiles, "3d_res/model_bottom1/dibu2.c3b")
+    table.insert(modelFiles, "3d_res/model_monkey/monkey.c3b")
+    table.insert(modelFiles, "3d_res/model_lion/lion.c3b")
+    table.insert(modelFiles, "3d_res/model_panda/panda.c3b")
+    table.insert(modelFiles, "3d_res/model_rabbit/rabbit.c3b")
+    table.insert(modelFiles, "3d_res/model_seat/di.c3b")
 
-    -- self._3dResCount = #modelFiles
-    -- self._3dIndex = 0
+    self._3dResCount = #modelFiles
+    self._3dIndex = 0
 
-    -- for i, v in ipairs(modelFiles) do
-    --     local file = v
-    --     cc.Sprite3D:createAsync(file, handler(self, self.load3DModelCallBack))
-    -- end
+    for i, v in ipairs(modelFiles) do
+        local file = v
+        cc.Sprite3D:createAsync(file, handler(self, self.load3DModelCallBack))
+    end
 end
+function forestdance:load3DModelCallBack(...)
+    print("load 3d model")
+    self._3dIndex = self._3dIndex + 1
 
+    if self._3dIndex == self._3dResCount and self._2dResCount == self._2dResTotal and not self._resLoadFinish then
+        -- self._scene._scene:removeChildByTag(23)
+        self:init3DModel()
+        self:initAnimal()
+        self:initCsbRes()
+        self._resLoadFinish = true
+        -- self._scene._bCaijinStatus = true
+
+        -- if self._scene._gameModel._bScene then
+        --     self._animLayer:setRotation3D(cc.vec3(0, 360 - self._scene._gameModel._sceneData.nAnimalRotateAngle * 15, 0))
+        --     self._arrow:setRotation3D(cc.vec3(0, self._scene._gameModel._sceneData.nPointerRatateAngle * 15 + 185, 0))
+        -- end
+
+        -- if self._scene._gameStatus <= g_var(cmd).IDI_GAME_BET then
+        --     -- 空闲或下注状态
+        --     self._loadLayer:removeFromParent()
+        --     self._loadLayer = nil
+        --     self:updateColor()
+
+        --     self:setGameStatus(self._scene._gameStatus)
+
+        --     if self._scene._gameStatus == g_var(cmd).IDI_GAME_BET then
+        --         -- 下注状态
+        --         -- 更新区域倍率
+        --         self:updateAreaMultiple()
+        --         -- 弹出下注层
+        --         self.popPlaceJettonLayer()
+        --         -- 更新按钮状态
+        --         self:updateControl()
+        --     end
+        -- end
+    end
+end
 
 return forestdance
