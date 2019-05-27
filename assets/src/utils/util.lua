@@ -28,9 +28,9 @@ function util.mlog( ... )
 	local scene = director:getRunningScene();
 	local viewsize = director:getWinSize();
 	-- 生成打印内容ttf放在初始位置
-	local ttfConfig = {}
-    ttfConfig.fontFilePath = "img2/font/MSYH.TTF"
-    ttfConfig.fontSize = 30
+	-- local ttfConfig = {}
+ --    ttfConfig.fontFilePath = "img2/font/MSYH.TTF"
+ --    ttfConfig.fontSize = 30
 
 	-- local mNode = cc.Label:createWithTTF(ttfConfig, content, cc.TEXT_ALIGNMENT_CENTER, viewsize.width-20)
 	local mNode = cc.Label:createWithSystemFont(content, "Arial", 34)
@@ -647,4 +647,16 @@ function util.shuffle(array)
         array[randomIndex] = array[i]; 
         array[i] = itemAtIndex;
 	end
+end
+
+function util.readOnly(t)
+    local _table = { }
+    local mt = {
+        __index = t,
+        __newindex = function()
+            error(" the table is read only ")
+        end
+    }
+    setmetatable(_table, mt)
+    return _table
 end
